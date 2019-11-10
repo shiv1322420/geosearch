@@ -16,6 +16,7 @@ let insertAdmin = function (objToSave) {
 // update admin detail in db
 
 let updateAdmin = function (id,updateDetail) {
+	console.log("in updateAdmin",updateDetail)
 	return new Promise((resolve, reject)=>{
 		console.log(id);
 		modal.findByIdAndUpdate(id,updateDetail, (err,result)=>{

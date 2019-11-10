@@ -7,6 +7,7 @@ let register = async (req, res) => {
     let name = req.body.name;
     let password = await hashPassword.generateHashPassword(req.body.password);
     let location = req.body.location;
+    let logoutKey="false";
     console.log(req.body);
 
     //     save data in database
@@ -14,7 +15,8 @@ let register = async (req, res) => {
         name,
         email,
         password,
-        location
+        location,
+        logoutKey
     }
     let criteria = { email }
     //check customer exist or not
@@ -61,11 +63,27 @@ let customerLogin = async (req, res) => {
 
 
         try {
-            let customerId = customerDbData[0].id;                                      //get customer id from database
+            let customerId = customerDbData[0].id;  
+            let logoutKey=customerDbData[0].logoutKey;
+            console.log(logoutKey)
+            let payload={
+                customerId,
+                email,
+                logoutKey
+            }                                    //get customer id from database
             let checkPassword = await hashPassword.checkHashPassword(password, customerDbData[0].password)
             if (checkPassword) {
                 console.log(checkPassword)
-                let getToken = await token.generateToken({ criteria, customerId })
+                let getToken = await token.generateToken(payload)
+                console.log("---",getToken)
+                console.log(customerId)
+                let logoutKey={
+                    logoutKey:"false"
+                };
+                customerDbData = await customerServices.updateCustomer(customerId,logoutKey)
+                console.log("customerdata",customerDbData)
+                console.log("mmmm")
+                console.log("mmmm")
                 console.log(getToken)
                 res.json({
                     "message": "Successfully login",
@@ -145,9 +163,7 @@ let updateProfile = async (req, res) => {
 }
 
 let findNearbySps=async(req,res)=>{
-// let kilometers=req.params.distance;   //in kilometers
-// let miles = kilometers / 1.6;
-//console.log(miles + " Miles");
+
 try {
     let id=req.reqid;
     let customerDbData=await customerServices.checkCustomerById(id);
@@ -174,18 +190,36 @@ try {
         })
 }
 }
-
-
-let check = (req, res) => {
-   let id=req.reqBody;
-    console.log(id)
-    console.log("yes")
-    res.send("success");
+let logout=async (req, res)=>
+{
+    try {
+        console.log("in logout");
+        let id=req.reqid;
+        console.log("req.id =",id)
+        let logoutKey={
+            logoutKey:"true"
+        };
+        let customerDbData = await customerServices.updateCustomer(id,logoutKey);
+        console.log("in logout data",customerDbData)
+        res.json({
+            "message": "Logout successfully",
+            "status": 200,
+            "data": {}
+        })    
+    } catch (error) {
+        res.json({
+            "message": "Logout failed",
+            "status": 400,
+            "data": error
+        }) 
+    }
+   
 }
+
 module.exports = {
     register,
     customerLogin,
     updateProfile,
     findNearbySps,
-    check
+    logout
 }

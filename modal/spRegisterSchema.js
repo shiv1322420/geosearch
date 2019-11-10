@@ -5,16 +5,16 @@ name:{type:String,required: true},
 email:{type:String,required: true},
 service_type:{type:String, required:true},                         
 password:{type:String,required: true},
+logoutKey:{type:String},
 location: {
     type: {
       type: String, 
-      enum: ['Point'], // 'location.type' must be 'Point'
-      required: true
+    // enum: ['Point'], // 'location.type' must be 'Point'
+      //required: true
     },
-    coordinates: {
-      type: Array,
-      required: true
-    }
+    coordinates:  [Number],
+     // required: true
+    
   }
 },
 {

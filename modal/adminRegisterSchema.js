@@ -4,7 +4,7 @@ const adminRegisterSchema=mongoose.Schema({
 name:{type:String,required: true},
 email:{type:String,required: true},                         
 password:{type:String,required: true},
-logoutKey:{type:Boolean},
+logoutKey:{type:String},
 },
 {
     timestamps:true   //it is used t to automatically add two new fields - createdAt and updatedAt to the schema.

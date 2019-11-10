@@ -19,17 +19,18 @@ let customerAuthenticate = async (req, res, next) => {
             console.log(result)
             let tokenId=result.customerId
             console.log(tokenId)
-            req.reqid=tokenId;
-            let checkId=customerServices.checkCustomerById(tokenId)
+            req.reqid=tokenId;  
+            let checkId=await customerServices.checkCustomerById(tokenId)
+            let logoutKey=checkId.logoutKey;
             if (result) {
-                if(checkId)
+                if(checkId && logoutKey=="false")
                 {
                     next();
                 }
                 else{
                     res.json({
                         status: 403,
-                        message: "customer not found",
+                        message: "cannot access",
                         data: {}
         
                     })
@@ -73,19 +74,24 @@ let spAuthenticate = async (req, res, next) => {
             // Set the token
             req.token = bearerToken;
             let result = await token.verifyToken(req.token);
+            console.log("in a token")
             console.log(result)
             let tokenId=result.spId
             console.log(tokenId)
-            let checkId=spServices.checkSPById(tokenId)
+            req.reqid=tokenId;
+            let checkId=await spServices.checkSPById(tokenId)
+            console.log("checkid--",checkId)
+            let logoutKey=checkId.logoutKey;
+            console.log("----logoutkey=",logoutKey)
             if (result) {
-                if(checkId)
+                if(checkId && logoutKey=="false")
                 {
                     next();
                 }
                 else{
                     res.json({
                         status: 403,
-                        message: "sp not found",
+                        message: "cannot access",
                         data: {}
         
                     })
@@ -130,18 +136,23 @@ let adminAuthenticate = async (req, res, next) => {
             let result = await token.verifyToken(req.token);
             console.log(result)
             let tokenId=result.adminId
+            console.log("result----",result)
             req.reqid=tokenId;
             console.log(tokenId)
-            let checkId=adminServices.checkAdminById(tokenId)
+            let checkId=await adminServices.checkAdminById(tokenId)
+            let logoutKey=checkId.logoutKey;
+             console.log("---------key",logoutKey)
+            console.log("in auth");
+            console.log(checkId)
             if (result) {
-                if(checkId)
+                if(checkId && logoutKey=="false")
                 {
                     next();
                 }
                 else{
                     res.json({
                         status: 403,
-                        message: "admin not found",
+                        message: "cannot access",
                         data: {}
         
                     })

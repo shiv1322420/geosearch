@@ -16,7 +16,9 @@ let insertCustomer = function (objToSave) {
 //update customer detail in db
 
 let updateCustomer = function (id,updateDetail) {
+	console.log("before promise")
 	return new Promise((resolve, reject)=>{
+		console.log("in update")
 		console.log(id);
 		modal.findByIdAndUpdate(id,updateDetail, (err,result)=>{
 			if(err)
@@ -60,7 +62,7 @@ let checkCustomerById = function (id) {
 let findSps=function(type,coordinates,distance){
 	return new Promise((resolve, reject)=>{
 		console.log(type)
-	  spModal.find({location:{$nearSphere:{$maxDistance:distance*1000,$geoSearch:{type:type,coordinates:coordinates}}}},(err,result)=>{
+	  spModal.aggregate([{$geoNear:{"near":{"type":type,"coordinates":coordinates},"distanceField": "distance","spherical": true,"maxDistance":distance*1000}}],(err,result)=>{
           if (err) {
 			  reject(err)
 			  //console.log(err)
@@ -70,6 +72,10 @@ let findSps=function(type,coordinates,distance){
 	  })
 	})
 }
+
+
+
+
 
 module.exports={
 insertCustomer:insertCustomer,

@@ -6,14 +6,15 @@ let register = async (req, res) => {
    let email = req.body.email;
    let name = req.body.name;
    let password = await hashPassword.generateHashPassword(req.body.password);
-   let logoutKey=false;
+   let logoutKey="false";
    console.log(req.body);
 
    //     save data in database
    adminData = {
        name,
        email,
-       password
+       password,
+       logoutKey
    }
    let criteria = { email }
    //check customer exist or not
@@ -57,14 +58,20 @@ let adminLogin = async (req, res) => {
    //check admin exist
    let adminDbData = await adminServices.checkAdmin(criteria)
    console.log(adminDbData.length)
+   console.log("aaaa")
    console.log(adminDbData)
    if (adminDbData.length > 0) {
 
 
        try {
-           let adminId = adminDbData[0].id;                                      //get  id from database
+           let adminId = adminDbData[0].id;  
+           console.log("hhhh")                                    //get  id from database
          console.log(adminId);
-           let logoutKey=adminDbData[0].logout;
+         console.log(adminDbData[0].logoutKey)
+           let logoutKey=adminDbData[0].logoutKey;
+           console.log(adminDbData[0].name)
+           console.log("id")
+           console.log(logoutKey)
            let payload={
                adminId,
                email,
@@ -74,6 +81,10 @@ let adminLogin = async (req, res) => {
            if (checkPassword) {
                console.log(checkPassword)
                let getToken = await token.generateToken(payload)
+               let logoutKey={
+                logoutKey:"false"
+            };
+            let adminDbData = await adminServices.updateAdmin(adminId,logoutKey);
                console.log(getToken)
                res.json({
                    "message": "Successfully login",
@@ -153,11 +164,9 @@ let updateProfile = async (req, res) => {
 
 //fetch all customers
 let fetchAllCustomers=async(req,res)=>{
-    let projection={
-     name:1,
-    }
+    
     try {
-        let customerDbData = await adminServices.getAllCustomer(projection)
+        let customerDbData = await adminServices.getAllCustomer()
         console.log(customerDbData)
        res.send(customerDbData)
        
@@ -176,19 +185,13 @@ let fetchAllCustomers=async(req,res)=>{
     }
 }
 let fetchAllsp=async(req,res)=>{
-    let projection={
-     name:1,
-    }
+    
     try {
-        let spDbData = await adminServices.getAllspr(projection)
+        let spDbData = await adminServices.getAllsp()
         console.log(spDbData)
        res.send(spDbData)
        
-        // res.json({
-        //     "message": "Fetching data Successfuly",
-        //     "status": 200,
-        //     "data": customerDbData
-        // })
+      
     } catch (error) {
         console.log(error)
        res.json({
@@ -202,11 +205,14 @@ let fetchAllsp=async(req,res)=>{
 let logout=async (req, res)=>
 {
     try {
+        console.log("in logout");
         let id=req.reqid;
-        console.log(id)
-        let logoutKey=true;
+        console.log("req.id =",id)
+        let logoutKey={
+            logoutKey:"true"
+        };
         let adminDbData = await adminServices.updateAdmin(id,logoutKey);
-        console.log(adminDbData)
+        console.log("in logout data",adminDbData)
         res.json({
             "message": "Logout successfully",
             "status": 200,
@@ -221,15 +227,12 @@ let logout=async (req, res)=>
     }
    
 }
-let check = (req, res) => {
-   res.send("success");
-}
+
 module.exports = {
    register,
    adminLogin,
    updateProfile,
    fetchAllCustomers,
    fetchAllsp,
-   logout,
-   check
+   logout
 }
