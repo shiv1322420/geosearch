@@ -129,7 +129,7 @@ let updateProfile = async (req, res) => {
     console.log(id);
 
     //     save data in database
-         customerData=req.body;
+        let  customerData=req.body;
          if(customerData.password!=="")
     {
      customerData.password=await hashPassword.generateHashPassword(req.body.password);
@@ -168,7 +168,7 @@ try {
     let id=req.reqid;
     let customerDbData=await customerServices.checkCustomerById(id);
     console.log(customerDbData)
-    let distance=5;
+    let distance=req.params.distance;
     console.log(customerDbData.location);
     let location=customerDbData.location;
     let type=location.type;

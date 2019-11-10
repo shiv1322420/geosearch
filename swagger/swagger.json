@@ -1,0 +1,378 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "description": "Query operations",
+        "title": "Geo search APIS Using Mongodb"
+    },
+    "host": "localhost:3005",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/admin/register": {
+            "post": {
+                "description": "Api to register a admin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "new admin register",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully Inserted."
+                    }
+                }
+            }
+        },
+        "/admin/login": {
+            "post": {
+                "description": "admin login",
+        
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "admin login",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully login."
+                    }
+                }
+            }
+        },
+        "/admin/updateProfile/{adminId}":{
+            "put": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+            
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "String"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "add admin details",
+                        "required": true
+                    }
+                ],
+                "description": "Api of Update",
+                "summary": "Update an admin",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully Inserted."
+                    }
+                }
+            }
+        },
+        "/admin/customers": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+            
+                    }
+                ],
+                "description": "To show the list of customers",
+                "responses": {
+                    "200": {
+                        "description": "Successfully fetched the data"
+                    }
+                }
+            }
+        },
+        "/admin/sps": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+            
+                    }
+                ],
+                "description": "To show the list of sps",
+                "responses": {
+                    "200": {
+                        "description": "Successfully fetched the data"
+                    }
+                }
+            }
+        },
+        "/admin/logout": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+                    }
+                ],
+                "description": "To logout the admin",
+                "responses": {
+                    "200": {
+                        "description": "logout successfull"
+                    }
+                }
+            }
+        },
+        "/customer/register": {
+            "post": {
+                "description": "Api to register a customer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "new admin customer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully Inserted."
+                    }
+                }
+            }
+        },
+        
+        "/customer/login": {
+            "post": {
+                "description": "admin login",
+        
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "customer login",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully login."
+                    }
+                }
+            }
+        },
+        "/customer/updateProfile/{customerid}":{
+            "put": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+            
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "String"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "add customer details",
+                        "required": true
+                    }
+                ],
+                "description": "Api of Update",
+                "summary": "Update customer details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully Inserted."
+                    }
+                }
+            }
+        },
+        "/customer/findsps/{distance}": {
+            "get": {
+                "parameters": [
+                    
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+            
+                    },
+                    {
+                        "name": "distance",
+                        "in": "path",
+                        "description":"distance in kilometers",
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "description": "To show the list of sps",
+                "responses": {
+                    "200": {
+                        "description": "Successfully fetched the data"
+                    }
+                }
+            }
+        },
+        "/customer/logout": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+                    }
+                ],
+                "description": "To logout the customer",
+                "responses": {
+                    "200": {
+                        "description": "logout successfull"
+                    }
+                }
+            }
+        },
+        "/sp/register": {
+            "post": {
+                "description": "Api to register a sp",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "new admin sp",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully Inserted."
+                    }
+                }
+            }
+        },
+        
+        "/sp/login": {
+            "post": {
+                "description": "sp login",
+        
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "sp login",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully login."
+                    }
+                }
+            }
+        },
+        "/sp/updateProfile/{spid}":{
+            "put": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+            
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "String"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "add sp details",
+                        "required": true
+                    }
+                ],
+                "description": "Api of Update",
+                "summary": "Update sp details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully Inserted."
+                    }
+                }
+            }
+        },
+        "/sp/logout": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "token": "id",
+                        "in": "header"
+                    }
+                ],
+                "description": "To logout the customer",
+                "responses": {
+                    "200": {
+                        "description": "logout successfull"
+                    }
+                }
+            }
+        }
+      
+      
+    }
+}

@@ -3,8 +3,10 @@ const constants = require('../config/constants');
 
 //generate hash password
 function generateHashPassword(password) {
+    console.log(password)
     return new Promise((resolve, reject) => {
         bcrypt.hash(password,constants.saltRounds,(err, hash)=> {
+            console.log(constants.saltRounds)
             if (err)
                 reject(err)
             else

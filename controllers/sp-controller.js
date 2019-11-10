@@ -118,16 +118,19 @@ let spLogin = async (req, res) => {
 
 let updateProfile = async (req, res) => {
     let id=req.params.spId;
-  
+    console.log("in a update");
+    console.log("id---",id);
     spData=req.body;
-         if(spData.password!=="")
-    {
-        spData.password=await hashPassword.generateHashPassword(req.body.password);
-    }
-    else
-    {
-        spData=req.body;
-    }
+    console.log("spdata---",spData);
+    if(spData.password!=="")
+{
+spData.password=await hashPassword.generateHashPassword(req.body.password);
+console.log("hash",spData.password);
+}
+else
+{
+  spData=req.body;
+}
     console.log("sp data--")
     console.log(spData)
     try {
