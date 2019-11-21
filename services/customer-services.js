@@ -20,6 +20,7 @@ let updateCustomer = function (id,updateDetail) {
 	return new Promise((resolve, reject)=>{
 		console.log("in update")
 		console.log(id);
+		console.log(updateDetail)
 		modal.findByIdAndUpdate(id,updateDetail, (err,result)=>{
 			if(err)
 			reject (err)
@@ -62,7 +63,7 @@ let checkCustomerById = function (id) {
 let findSps=function(type,coordinates,distance){
 	return new Promise((resolve, reject)=>{
 		console.log(type)
-	  spModal.aggregate([{$geoNear:{"near":{"type":type,"coordinates":coordinates},"distanceField": "distance","spherical": true,"maxDistance":distance*1000}}],(err,result)=>{
+	  spModal.aggregate([{$geoNear:{"near"	:{"type":type,"coordinates":coordinates},"distanceField": "distance","spherical": true,"maxDistance":distance*1000}}],(err,result)=>{
           if (err) {
 			  reject(err)
 			  //console.log(err)

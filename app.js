@@ -8,7 +8,7 @@ const spRoute=require('./routes/sp-route');
 const adminRoute=require('./routes/admin-route');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger/swagger.json');
-const port = 3005;
+const port = 3007;
 
 //middlewares for docs swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

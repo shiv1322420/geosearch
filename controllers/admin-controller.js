@@ -123,26 +123,19 @@ let adminLogin = async (req, res) => {
 
 let updateProfile = async (req, res) => {
  let id=req.params.adminId;
-//    let email = req.body.email;
-//    let name = req.body.name;
-//    let password = await hashPassword.generateHashPassword(req.body.password);
+
     console.log(id);
-    adminData=req.body;
-    if(adminData.password!=="")
+   let adminData=req.body;
+    let password=req.body.password
+    if(typeof password!=="undefined")
     {
-     adminData.password=await hashPassword.generateHashPassword(req.body.password);
+    adminData.password=await hashPassword.generateHashPassword(req.body.password);
+    console.log("hash",adminData.password);
     }
     else
     {
-       adminData=req.body;
-    }
-   //     save data in database
-//    adminData = {
-//        name,
-//        email,
-//        password,
-//    }
-   console.log("admin data--")
+      adminData=req.body;
+    }  console.log("admin data--")
    console.log(adminData)
    try {
        let adminDbData = await adminServices.updateAdmin(id,adminData);

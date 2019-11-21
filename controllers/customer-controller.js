@@ -82,8 +82,6 @@ let customerLogin = async (req, res) => {
                 };
                 customerDbData = await customerServices.updateCustomer(customerId,logoutKey)
                 console.log("customerdata",customerDbData)
-                console.log("mmmm")
-                console.log("mmmm")
                 console.log(getToken)
                 res.json({
                     "message": "Successfully login",
@@ -122,34 +120,29 @@ let customerLogin = async (req, res) => {
 
 let updateProfile = async (req, res) => {
     let id=req.params.customerid;
-    // let email = req.body.email;
-    // let name = req.body.name;
-    // let password = await hashPassword.generateHashPassword(req.body.password);
-    // let location = req.body.location;
+    
     console.log(id);
 
-    //     save data in database
+    
         let  customerData=req.body;
-         if(customerData.password!=="")
-    {
-     customerData.password=await hashPassword.generateHashPassword(req.body.password);
-    }
-    else
-    {
-       customerData=req.body;
-    }
-    // {
-    //     name,
-    //     email,
-    //     password,
-    //     location
-    // }
+        let password=req.body.password
+        if(typeof password!=="undefined")
+        {
+        customerData.password=await hashPassword.generateHashPassword(req.body.password);
+        console.log("hash",customerData.password);
+        }
+        else
+        {
+          customerData=req.body;
+        }
+  
     try {
         let customerDbData = await customerServices.updateCustomer(id,customerData);
+        console.log("------",customerDbData);
         res.json({
             "message": "Successfully updated",
             "status": 200,
-            "data": customerData
+            "data": customerDbData
         })
     } catch (error) {
         console.log(error)

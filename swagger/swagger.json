@@ -5,7 +5,7 @@
         "description": "Query operations",
         "title": "Geo search APIS Using Mongodb"
     },
-    "host": "localhost:3005",
+    "host": "localhost:3007",
     "basePath": "/",
     "schemes": [
         "http"
@@ -67,9 +67,10 @@
             
                     },
                     {
-                        "name": "id",
+                        "name": "adminId",
                         "in": "path",
-                        "type": "String"
+                        "type": "String",
+                        "format":"String"
                     },
                     {
                         "in": "body",
@@ -203,9 +204,10 @@
             
                     },
                     {
-                        "name": "id",
+                        "name": "customerid",
                         "in": "path",
-                        "type": "String"
+                        "type": "String",
+                        "format":"String"
                     },
                     {
                         "in": "body",
@@ -329,9 +331,10 @@
             
                     },
                     {
-                        "name": "id",
+                        "name": "spId",
                         "in": "path",
-                        "type": "String"
+                        "type": "String",
+                        "format":"String"
                     },
                     {
                         "in": "body",
